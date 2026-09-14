@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sudoku Game</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="theme-toggle-container">
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark/light mode">
+      <span class="theme-icon">🌙</span>
+    </button>
+  </div>
+
+  <main class="game-container">
+    <h1>Sudoku Game</h1>
+
+    <section class="game-layout" aria-label="Sudoku game">
+      <aside class="left-panel" aria-label="Game settings">
+        <div class="setting-group">
+          <label for="difficulty">Difficulty</label>
+          <select id="difficulty" aria-label="Select Sudoku difficulty">
+            <option value="easy">Easy</option>
+            <option value="medium" selected>Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+        <button id="new-game" class="new-game-button">New Game</button>
+      </aside>
+
+      <section class="board-section" aria-label="Puzzle area">
+        <div id="sudoku-board" aria-label="Sudoku board"></div>
+        <div class="timer-line" aria-live="polite">
+          Time: <span id="timer-value">00:00</span>
+          <button id="pause-resume" class="pause-button" title="Pause game (P)" aria-label="Pause game">
+            <span class="pause-icon">⏸️</span>
+          </button>
+        </div>
+      </section>
+
+      <aside class="action-panel" aria-label="Puzzle actions">
+        <button id="check-solution" class="action-button">Check Puzzle</button>
+        <button id="hint" class="action-button">Hint</button>
+        <button id="note-mode" class="action-button note-mode-button" aria-pressed="false">Note Mode: Off</button>
+      </aside>
+    </section>
+
+    <section class="number-tracker" aria-label="Number usage tracker">
+      <div class="tracker-heading">
+        <h2>Number Tracker</h2>
+        <p id="tracker-status">Select a number to highlight it on the board.</p>
+      </div>
+      <div id="number-buttons" class="number-buttons" role="group" aria-label="Choose a number to highlight"></div>
+    </section>
+
+    <div id="message" role="status" aria-live="polite"></div>
+
+    <section class="solver-section" aria-label="Visual Sudoku solver">
+      <div class="solver-header">
+        <div>
+          <h2>Visual Solver</h2>
+          <p id="solver-status">Watch a backtracking solver find the solution.</p>
+        </div>
+        <button id="solver-animation" class="secondary-button">Show Solver</button>
+      </div>
+      <div class="solver-progress" aria-hidden="true"><div id="solver-progress-bar"></div></div>
+    </section>
+
+    <section class="leaderboard-section" aria-labelledby="leaderboard-title">
+      <div class="leaderboard-header">
+        <div>
+          <h2 id="leaderboard-title">Top 10 Fastest Times</h2>
+          <p>Scores are saved in this browser.</p>
+        </div>
+        <button id="clear-scores" class="secondary-button">Clear Scores</button>
+      </div>
+      <div id="scores-list" class="scores-list">
+        <p>No scores yet</p>
+      </div>
+    </section>
+
+    <div id="pause-overlay" class="pause-overlay hidden" aria-hidden="true">
+      <div class="pause-content">
+        <div class="pause-text">⏸️ PAUSED</div>
+        <div class="pause-time" id="pause-time">00:00</div>
+        <button id="resume-button" class="resume-btn">Resume (Space)</button>
+      </div>
+    </div>
+
+    <div id="score-submit-overlay" class="score-submit-overlay hidden" aria-hidden="true">
+      <div class="score-submit-modal" role="dialog" aria-modal="true" aria-labelledby="score-submit-title">
+        <div class="score-submit-header">
+          <h2 id="score-submit-title">🎉 Puzzle Solved!</h2>
+        </div>
+        <div class="score-submit-content">
+          <p>Difficulty: <strong id="final-difficulty">Medium</strong></p>
+          <p>Time: <span id="final-time">00:00</span></p>
+          <div class="score-input-group">
+            <label for="player-name">Enter your name:</label>
+            <input type="text" id="player-name" placeholder="Your name" maxlength="50" autocomplete="name">
+          </div>
+        </div>
+        <div class="score-submit-buttons">
+          <button id="submit-score-btn" class="submit-score-btn">Save Score</button>
+          <button id="skip-score-btn" class="skip-score-btn">Skip</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>
